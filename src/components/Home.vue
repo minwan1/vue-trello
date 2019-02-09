@@ -23,7 +23,7 @@
 
 <script>
 
-  import axios from 'axios'
+  import board from '../api'
 
   export default {
     name: "Home",
@@ -40,16 +40,9 @@
     methods: {
       fetchData() {
         this.loading = true;
-
-        axios.get('http://localhost:3000/boards')
-          .then(res =>{
-            this.apiRes = res.data;
-          })
-          .catch(res =>{
-            this.$router.replace('/login')
-          })
-          .finally(res =>{
-            this.loading = false;
+        board.fetch()
+          .then(data => {
+            this.boards = data;
           });
       }
     }

@@ -20,12 +20,16 @@
 </template>
 
 <script>
+
+  import axios from 'axios'
+
   export default {
     name: "Home",
     data() {
       return {
         loading: false,
-        apiRes: 'test'
+        apiRes: 'test',
+        error: ''
       }
     },
     created() {
@@ -34,18 +38,17 @@
     methods: {
       fetchData() {
         this.loading = true;
-        const req = new XMLHttpRequest();
-        req.open('GET', 'http://localhost:3000/health');
-        req.send();
 
-        req.addEventListener('load', () => {
-          this.loading = false;
-          this.apiRes = {
-            status: req.status,
-            statusText :req.statusText,
-            response: JSON.parse(req.response)
-          }
-        });
+        axios.get('http://localhost:3000/health')
+          .then(res =>{
+            this.apiRes = res.data;
+          })
+          .catch(res =>{
+            this.error = res.response.data;
+          })
+          .finally(res =>{
+            this.loading = false;
+          });
       }
     }
   }

@@ -2,8 +2,8 @@
   <div>
     Board
     <div>bid : {{bid}}</div>
-    <router-link to="/b/${bid}/c/1">Card 1</router-link>
-    <router-link to="/b/${bid}/c/2">Card 2</router-link>
+    <router-link :to="`/b/${bid}/c/1`">Card 1</router-link>
+    <router-link :to="`/b/${bid}/c/2`">Card 1</router-link>
     <hr />
     <router-view></router-view>
   </div>
@@ -18,6 +18,12 @@ export default {
     return {
       bid: 0
     }
+  },
+  computed : {
+    path1(){
+      return `/b/${this.bid}/c/1`;
+    }
+
   },
   created(){
     this.bid = this.$route.params.bid;

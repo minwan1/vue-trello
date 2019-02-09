@@ -5,7 +5,9 @@
       Board List:
       <div v-if="loading">Loading...</div>
       <div v-else>
-        Api result: {{apiRes}}
+        <div v-for="b in boards" :key="b.id">
+          {{ b }}
+        </div>
       </div>
       <ul>
         <li>
@@ -39,12 +41,12 @@
       fetchData() {
         this.loading = true;
 
-        axios.get('http://localhost:3000/health')
+        axios.get('http://localhost:3000/boards')
           .then(res =>{
             this.apiRes = res.data;
           })
           .catch(res =>{
-            this.error = res.response.data;
+            this.$router.replace('/login')
           })
           .finally(res =>{
             this.loading = false;

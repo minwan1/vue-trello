@@ -17,7 +17,7 @@ const requireAuth = (to, from, next) =>{
 
 const routes = [
   { path: '/', component: Home, beforeEnter: requireAuth },
-  { path: '/login', component: Login, beforeEnter: requireAuth },
+  { path: '/login', component: Login},
   {path: '/b/:bid', component: Board, children: [
       {
         path: 'c/:cid', component: Card, beforeEnter: requireAuth
@@ -25,12 +25,11 @@ const routes = [
     ]
   },
   {path: '*', component: Notfound}
-]
+];
 
 const router = new VueRouter({
   mode: 'history',
   routes // `routes: routes`의 줄임
-})
-
+});
 
 export default router

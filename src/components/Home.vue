@@ -23,7 +23,7 @@
 
 <script>
 
-  import board from '../api'
+  import {board} from '../api'
 
   export default {
     name: "Home",

@@ -14,17 +14,21 @@
         </a>
       </div>
     </div>
+    <AddBoard v-if="isAddBoard" @close="isAddBoard=false" @submit="onAddBoard"></AddBoard>
   </div>
 </template>
 
 <script>
   import {board} from '../api'
+  import AddBoard from "./AddBoard";
   export default {
+    components: {AddBoard},
     data() {
       return {
         loading: false,
         boards: [],
-        error: ''
+        error: '',
+        isAddBoard: false
       }
     },
     created() {
@@ -47,7 +51,11 @@
           })
       },
       addBoard() {
-        console.log('addBoard()')
+        this.isAddBoard = true;
+      },
+      onAddBoard(title) {
+        board.create(title)
+          .then(() => this.fetchData());
       }
     }
   }

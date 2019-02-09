@@ -27,9 +27,13 @@
       return {
         loading: false,
         boards: [],
-        error: '',
-        isAddBoard: false
+        error: ''
       }
+    },
+    computed:{
+      ...mapState([
+      'isAddBoard'
+      ])
     },
     created() {
       this.fetchData()
@@ -41,7 +45,7 @@
     },
     methods: {
       fetchData() {
-        this.loading = true
+        this.loading = true;
         board.fetch()
           .then(data => {
             this.boards = data.list

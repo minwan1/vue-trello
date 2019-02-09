@@ -6,14 +6,21 @@ import Login from '../components/Login'
 import Board from '../components/Board'
 import Card from '../components/Card'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
+
+
+const requireAuth = (to, from, next) =>{
+  const isAuth = localStorage.getItem('token');
+  const loginPath = `/login?rPath=${encodeURIComponent(to.path)}`;
+  isAuth ? next() : next(loginPath);
+};
 
 const routes = [
-  { path: '/', component: Home },
-  { path: '/login', component: Login },
+  { path: '/', component: Home, beforeEnter: requireAuth },
+  { path: '/login', component: Login, beforeEnter: requireAuth },
   {path: '/b/:bid', component: Board, children: [
       {
-        path: 'c/:cid', component: Card
+        path: 'c/:cid', component: Card, beforeEnter: requireAuth
       }
     ]
   },

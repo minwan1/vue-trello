@@ -5,12 +5,14 @@ import Home from '../components/Home'
 import Login from '../components/Login'
 import Board from '../components/Board'
 import Card from '../components/Card'
+import store from '../store'
+
 
 Vue.use(VueRouter);
 
 
 const requireAuth = (to, from, next) =>{
-  const isAuth = localStorage.getItem('token');
+  const isAuth = store.getters.isAuth;
   const loginPath = `/login?rPath=${encodeURIComponent(to.path)}`;
   isAuth ? next() : next(loginPath);
 };

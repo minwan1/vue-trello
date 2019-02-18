@@ -12,11 +12,24 @@ const store = new Vuex.Store({
     boards: []
   },
   mutations: {
-    SET_IS_ADD_BOARD (state, toggle){
+    SET_IS_ADD_BOARD(state, toggle) {
       state.isAddBoard = toggle;
     },
-    SET_BOARDS(state, boards){
+    SET_BOARDS(state, boards) {
       state.boards = boards;
+    },
+    LOGIN() {
+      if(!token) return;
+      state.token = token;
+      localStorage.setItem('token', token);
+      api.setAuthInHeader(token);
+      
+    },
+    LOGOUT(state) {
+      state.token = null;
+      delete localStorage.token;
+      api.setAuthInHeader(null);
+      
     }
   },
   actions: {
@@ -29,9 +42,16 @@ const store = new Vuex.Store({
         commit('SET_BOARDS', data.list);
       })
     }
+  },
+  LOGIN({commit}, {email, password}){
+    return api.auth.login(email, password)
+      .then(({accessToken}) => commit('LOGIN', accessToken));
   }
 });
 
+
+const { token } = localStorage;
+store.commit('LOGIN', token);
 
 export default store;
 

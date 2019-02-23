@@ -1,13 +1,15 @@
 <template>
   <div>
     <div class="board-wrapper">
-      <div class="board-header">
-        <span class="board-title">{{board.title}}</span>
-      </div>
-      <div class="list-section-wrpper">
-        <div class="list-section">
-          <div class="list-wrapper" v-for="list in board.lists" :key = "list.pos">
-            <List :data="list" />
+      <div class="board">
+        <div class="board-header">
+          <span class="board-title">{{board.title}}</span>
+        </div>
+        <div class="list-section-wrapper">
+          <div class="list-section">
+            <div class="list-wrapper" v-for="list in board.lists" :key="list.pos">
+              <List :data="list" />
+            </div>
           </div>
         </div>
       </div>
@@ -16,35 +18,32 @@
 </template>
 
 <script>
-
 import {mapState, mapActions} from 'vuex'
 import List from './List.vue'
-
 export default {
-  name: "Board",
-  components: {
-    List
-  },
-  data: () => ({
+  components: { List },
+  data() {
+    return {
       bid: 0,
-      loading: false,
-  }),
-  computed : {
+      loading: false
+    }
+  },
+  computed: {
     ...mapState({
       board: 'board'
     })
   },
-  created(){
-    this.fetchData();
+  created() {
+    this.fetchData()
   },
   methods: {
     ...mapActions([
       'FETCH_BOARD'
     ]),
     fetchData() {
-      this.loading = true;
-      this.FETCH_BOARD({ id: this.$route.params.bid})
-        .then(() => this.loading = false);
+      this.loading = true
+      this.FETCH_BOARD({id: this.$route.params.bid})
+        .then(() => this.loading = false)
     }
   }
 }

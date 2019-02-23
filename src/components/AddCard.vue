@@ -31,6 +31,10 @@ export default {
       'ADD_CARD'
     ]),
     onSubmit() {
+      if(this.invalidInput) return;
+      const {inputTitle, listId} = this;
+      this.ADD_CARD({title: inputTitle, listId})
+        .finally(() => this.inputTitle = '')
     },
   }
 }

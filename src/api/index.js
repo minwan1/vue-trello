@@ -38,3 +38,11 @@ export const auth = {
     return request('post', '/login', {email, password});
   }
 };
+
+
+export const card = {
+  create(title, listId, pos) {
+    return request('post', '/cards', { title, listId, pos});
+  }
+  
+};
